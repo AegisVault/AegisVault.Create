@@ -12,18 +12,18 @@ using AegisVault.Models.Inbound;
 
 namespace AegisVault.Function
 {
-    public class CreateLink
+    public class CreateDocumentLink
     {
         private readonly CreateLinkHelper _helper;
         private readonly AegisVaultContext _context;
-        public CreateLink(AegisVaultContext dbContext) {
+        public CreateDocumentLink(AegisVaultContext dbContext) {
             _context = dbContext;
             _helper = new CreateLinkHelper(dbContext);
         }
 
-        [FunctionName(nameof(CreateLinkFunction))]
-        public async Task<IActionResult> CreateLinkFunction(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "v1/CreateLink")] CreateLinkInbound body,
+        [FunctionName(nameof(CreateDocumentLinkFunction))]
+        public async Task<IActionResult> CreateDocumentLinkFunction(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "v1/CreateDocumentLink")] CreateLinkInbound body,
             ILogger log)
         {            
             string res = JsonConvert.SerializeObject(await _helper.CreateLinkPassword(body));
