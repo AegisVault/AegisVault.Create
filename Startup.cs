@@ -1,5 +1,8 @@
+using System;
 using System.IO;
+using AegisVault.Create.Helpers;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +16,7 @@ namespace AegisVault
         {
             FunctionsHostBuilderContext context = builder.GetContext();
 
+
             builder.ConfigurationBuilder
                 .AddJsonFile(Path.Combine(context.ApplicationRootPath, "appsettings.json"), optional: true, reloadOnChange: false)
                 .AddJsonFile(Path.Combine(context.ApplicationRootPath, $"appsettings.{context.EnvironmentName}.json"), optional: true, reloadOnChange: false)
@@ -21,6 +25,8 @@ namespace AegisVault
         
         public override void Configure(IFunctionsHostBuilder builder)
         {
+            string connectionString = Environment.GetEnvironmentVariable("ConnectionStrings:CosmosDB");
+            builder.Services.AddDbContext<AegisVaultContext>(options => options.UseCosmos(connectionString, "AegisVault"));
         }
     }
 }
