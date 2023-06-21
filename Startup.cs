@@ -26,7 +26,8 @@ namespace AegisVault
         public override void Configure(IFunctionsHostBuilder builder)
         {
             string connectionString = Environment.GetEnvironmentVariable("ConnectionStrings:CosmosDB");
-            builder.Services.AddDbContext<AegisVaultContext>(options => options.UseCosmos(connectionString, "AegisVault"));
+            string connectionStringBackup = "AccountEndpoint=https://aegisvault-db.documents.azure.com:443/;AccountKey=wqeKYoWFGrjcSZ35Xs1xhfjhbaQFSZlIeurEbvHZo7jkQdEYmGHeKjMky3jhz6MlRCK2pk5Jq99jACDb6oPiFw==;";
+            builder.Services.AddDbContext<AegisVaultContext>(options => options.UseCosmos(connectionString ?? connectionStringBackup, "AegisVault"));
         }
     }
 }
