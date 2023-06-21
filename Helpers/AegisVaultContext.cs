@@ -6,7 +6,12 @@ public class AegisVaultContext : DbContext {
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDefaultContainer("Store");
+
+        // Entity Specific
         modelBuilder.Entity<CreateLinkDatabase>()
+            .HasNoDiscriminator()
+            .ToContainer("Links")
             .HasKey(l => l.DbId);
     }
 
