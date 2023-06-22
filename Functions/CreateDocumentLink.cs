@@ -29,11 +29,10 @@ namespace AegisVault.Function
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "v1/CreateFileLink")] HttpRequest req,
             ILogger log)
         {
-            Console.Write("asd");
-            var ee = req.Form.Files;
+            IFormFile formData = req.Form.Files.FirstOrDefault();
             IFormCollection cols = await req.ReadFormAsync();
-            //string res = JsonConvert.SerializeObject(await _helper.CreateLinkPassword(body));
-            string res = JsonConvert.SerializeObject(await _helper.CreateDocumentPassword(ee.First(), cols["password"]));
+            string password = cols["password"];
+            string res = JsonConvert.SerializeObject(await _helper.CreateDocumentPassword(formData, password));
             return new OkObjectResult(res);
         }
     }
