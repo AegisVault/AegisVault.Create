@@ -47,6 +47,7 @@ namespace AegisVault.Function
 
             //Create HttpClient
             using var httpClient = new HttpClient();
+            if (httpClient.Timeout != TimeSpan.FromMinutes(3)) httpClient.Timeout = TimeSpan.FromMinutes(3);
 
             //Serialize your request
             var content = new StringContent(JsonConvert.SerializeObject(sendEmailRequest), Encoding.UTF8, "application/json");
