@@ -58,7 +58,7 @@ namespace AegisVault.Create.Helpers
 
             CreateLinkOutbound toReturn = new CreateLinkOutbound()
             {
-                Link = $"https://aegisvault.dev/document/{databaseToInsert.DbId}"
+                Link = $"https://aegisvault.dev/file/{databaseToInsert.DbId}"
             };
 
             return toReturn;
