@@ -48,7 +48,7 @@ namespace AegisVault.Create.Functions
                 },
                 DocumentType = cols["DocumentType"],
                 RequiredContent = cols["RequiredContent"],
-                AegisLink = cols["Link"],
+                AegisLink = res.Link,
                 Name = cols["Name"],
                 AccountNumber = "",
                 Email = cols["Email"]
