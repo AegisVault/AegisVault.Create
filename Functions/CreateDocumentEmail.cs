@@ -11,11 +11,11 @@ namespace AegisVault.Create.Functions
 {
     public class CreateDocumentEmail
     {
-        private readonly CreateLinkHelper _helper;
+        private readonly CreateHelper _helper;
         private readonly AegisVaultContext _context;
         public CreateDocumentEmail(AegisVaultContext dbContext) {
             _context = dbContext;
-            _helper = new CreateLinkHelper(dbContext);
+            _helper = new CreateHelper(dbContext);
         }
 
         [FunctionName(nameof(CreateDocumentEmailFunction))]
