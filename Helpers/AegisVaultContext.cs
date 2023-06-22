@@ -10,17 +10,17 @@ public class AegisVaultContext : DbContext {
         modelBuilder.HasDefaultContainer("Store");
 
         // Entity Specific
-        modelBuilder.Entity<CreateLinkDatabase>()
+        modelBuilder.Entity<LinkDatabase>()
             .HasNoDiscriminator()
             .ToContainer("Links")
             .HasKey(l => l.DbId);
 
-        modelBuilder.Entity<CreateDocumentDatabase>()
+        modelBuilder.Entity<DocumentDatabase>()
             .HasNoDiscriminator()
             .ToContainer("Documents")
             .HasKey(l => l.DbId);
     }
 
-    public DbSet<CreateLinkDatabase> Links { get; set; }
-    public DbSet<CreateDocumentDatabase> Documents { get; set; }
+    public DbSet<LinkDatabase> Links { get; set; }
+    public DbSet<DocumentDatabase> Documents { get; set; }
 }

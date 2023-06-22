@@ -22,11 +22,19 @@ namespace AegisVault.Create.Helpers
         public async Task<CreateLinkOutbound> CreateLinkPassword(CreateLinkInbound inboundData)
         {
             await _context.Database.EnsureCreatedAsync();
-            CreateLinkDatabase databaseToInsert = new CreateLinkDatabase()
+
+            string userLink = "UNUSED";
+            do
+            {
+                userLink = LinkGenerator.GenerateLink();
+            } while (_context.Links.Where(item => item.DisplayId == userLink).Count() != 0);
+
+            LinkDatabase databaseToInsert = new LinkDatabase()
             {
                 DbId = Guid.NewGuid(),
                 Url = inboundData.Url,
                 Password = inboundData.Password,
+                DisplayId = userLink
             };
 
             await _context.Links.AddAsync(databaseToInsert);
@@ -34,7 +42,7 @@ namespace AegisVault.Create.Helpers
 
             CreateLinkOutbound toReturn = new CreateLinkOutbound()
             {
-                Link = $"https://AegisVault.dev/link/{databaseToInsert.DbId}"
+                Link = $"https://AegisVault.dev/link/{databaseToInsert.DisplayId}"
             };
 
             return toReturn;
@@ -45,12 +53,20 @@ namespace AegisVault.Create.Helpers
             BlobStorageHelper blobStorageHelper = new BlobStorageHelper();
             string location = await blobStorageHelper.UploadFile(file);
             await _context.Database.EnsureCreatedAsync();
-            CreateDocumentDatabase databaseToInsert = new CreateDocumentDatabase()
+
+            string userLink = "UNUSED";
+            do
+            {
+                userLink = LinkGenerator.GenerateLink();
+            } while (_context.Links.Where(item => item.DisplayId == userLink).Count() != 0);
+
+            DocumentDatabase databaseToInsert = new DocumentDatabase()
             {
                 DbId = Guid.NewGuid(),
                 Location = location,
                 ContentType = file.ContentType,
-                Password = password
+                Password = password,
+                DisplayId = userLink
             };
 
             await _context.Documents.AddAsync(databaseToInsert);

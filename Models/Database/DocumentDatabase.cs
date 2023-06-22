@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace AegisVault.Create.Models.Database
 {
-    public class CreateDocumentDatabase
+    public class DocumentDatabase
     {
         public Guid DbId { get; set; }
         public string Location { get; set; }
         public string Password { get; set; }
         public string ContentType { get; set; }
+        public string DisplayId { get; set; }
     }
 }
