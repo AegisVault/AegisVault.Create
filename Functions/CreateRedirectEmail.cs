@@ -14,6 +14,7 @@ using AegisVault.Create.Models.Inbound;
 using AegisVault.Create.Models.Integration;
 using AegisVault.Models.Inbound;
 using AegisVault.Models.Outbound;
+using System.Threading;
 
 namespace AegisVault.Function
 {
@@ -53,23 +54,17 @@ namespace AegisVault.Function
             var content = new StringContent(JsonConvert.SerializeObject(sendEmailRequest), Encoding.UTF8, "application/json");
 
             //send request to https://aegisvault-email.azurewebsites.net/api/SendEmail
-            var sendEmailResponse = await httpClient.PostAsync("https://aegisvault-email.azurewebsites.net/api/SendEmail", content);
-    
+            httpClient.PostAsync("https://aegisvault-email.azurewebsites.net/api/SendEmail", content);
+
+            Thread.Sleep(2000);
+
             var response = new CreateRedirectOutbound
             {
                 Link = generatedLink.Link,
                 Email = body.Email
             };
             string serializedResponse = JsonConvert.SerializeObject(response);
-            
-            //Ensure the request was successful
-            if(!sendEmailResponse.IsSuccessStatusCode)
-            {
-                log.LogError($"Error: {sendEmailResponse.StatusCode}");
-                return new BadRequestObjectResult(serializedResponse);
-
-            }
-            
+                        
             return new OkObjectResult(serializedResponse);
         }
     }
